@@ -1,0 +1,22 @@
+{
+  "name": "@warren-bank/ibm-watson-language-translator",
+  "version": "1.0.0",
+  "main": "lib/ibm-watson-language-translator/index.js",
+  "description": "Unofficial Node.js client library and CLI for a subset of the IBM Watson Language Translator service API.",
+  "license": "GPL-2.0",
+  "bin": {
+    "ibm-translate": "bin/ibm-translate.js"
+  },
+  "dependencies": {
+    "@warren-bank/node-process-argv": "^1.1.0"
+  },
+  "author": {
+    "name":  "Warren R. Bank",
+    "email": "warren.r.bank@gmail.com",
+    "url":   "https://github.com/warren-bank"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/warren-bank/node-ibm-watson-language-translator"
+  }
+}
