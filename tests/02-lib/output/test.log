@@ -1,0 +1,61 @@
+{
+  "args": {},
+  "data": "{\"text\":[\"Hello world\",\"Hello world\",\"Hello world\",\"Hello world\"],\"model_id\":\"en-de\"}",
+  "files": {},
+  "form": {},
+  "headers": {
+    "Authorization": "Basic XXXXXXXXX",
+    "Content-Length": "85",
+    "Content-Type": "application/json",
+    "Host": "httpbin.org",
+    "X-Amzn-Trace-Id": "YYYYYYYYYYYYYYY"
+  },
+  "json": {
+    "model_id": "en-de",
+    "text": [
+      "Hello world",
+      "Hello world",
+      "Hello world",
+      "Hello world"
+    ]
+  },
+  "origin": "ZZZ.ZZZ.ZZZ.ZZZ",
+  "url": "https://httpbin.org/post"
+}
+----------------------------------------
+[
+  "Hallo Welt",
+  "Hallo Welt",
+  "Hallo Welt",
+  "Hallo Welt"
+]
+----------------------------------------
+{
+  "args": {},
+  "data": "{\"text\":[\"Hello world\"],\"model_id\":\"en-de\"}",
+  "files": {},
+  "form": {},
+  "headers": {
+    "Authorization": "Basic XXXXXXXXX",
+    "Content-Length": "43",
+    "Content-Type": "application/json",
+    "Host": "httpbin.org",
+    "X-Amzn-Trace-Id": "YYYYYYYYYYYYYYY"
+  },
+  "json": {
+    "model_id": "en-de",
+    "text": [
+      "Hello world"
+    ]
+  },
+  "origin": "ZZZ.ZZZ.ZZZ.ZZZ",
+  "url": "https://httpbin.org/post"
+}
+----------------------------------------
+[
+  "Hallo Welt",
+  "Hallo Welt",
+  "Hallo Welt",
+  "Hallo Welt"
+]
+----------------------------------------
