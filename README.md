@@ -12,7 +12,7 @@ npm install @warren-bank/ibm-watson-language-translator
 
 #### Library API:
 
-* translate(api_key, api_url, input_language_code, output_language_code, input_strings_array)
+* translate(api_key, api_url, input_language_code, output_language_code, input_strings_array, optimize_duplicates)
   - input parameters:
     * api_key
       - type: string
@@ -30,6 +30,14 @@ npm install @warren-bank/ibm-watson-language-translator
       - type: array of strings
       - each string will be translated from `input_language_code` to `output_language_code`
       - the order of strings is preserved in the resolved return value
+    * optimize_duplicates
+      - type: boolean
+      - default: false
+      - when true:
+        * duplicate strings are removed from the request to the translation service
+        * translations for duplicate input strings are positionally inserted into the response from the translation service
+          - the resolved value is identical to that of a non-optimized request
+          - the benefit is that the translation service performs less work
   - return value:
     * Promise that resolves to an array of translated strings in the same order as the input array
 
@@ -96,25 +104,54 @@ npm install @warren-bank/ibm-watson-language-translator
 
 [related docs](https://cloud.ibm.com/docs/language-translator?topic=language-translator-translation-models&locale=en-US#section-list-languages-supported)
 
-#### Library Example:
+#### Library Examples:
+
+* implicit optimization of duplicate input strings
 
 ```javascript
 const translate = require('@warren-bank/ibm-watson-language-translator')
 
 {
-  const print_translated_strings = async function(...args) {
-    const translated_strings_array = await translate(...args)
-
-    console.log(JSON.stringify(translated_strings_array, null, 2))
-  }
-
   const api_key              = 'xxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxx'
   const api_url              = 'https://api.us-south.language-translator.watson.cloud.ibm.com/instances/yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy'
   const input_language_code  = 'en'
   const output_language_code = 'de'
-  const input_strings_array  = ['Hello world', 'Welcome to the jungle']
+  const input_strings_array  = ['Hello world', 'Welcome to the jungle', 'Hello world', 'Welcome to the jungle']
+  const optimize_duplicates  = true
 
-  print_translated_strings(api_key, api_url, input_language_code, output_language_code, input_strings_array)
+  const translated_strings_array = await translate(api_key, api_url, input_language_code, output_language_code, input_strings_array, optimize_duplicates)
+
+  console.log(output_language_code)
+  console.log(JSON.stringify(translated_strings_array, null, 2))
+}
+```
+
+* explicit optimization of duplicate input strings
+
+```javascript
+const translate         = require('@warren-bank/ibm-watson-language-translator')
+const {DuplicatesStore} = require('@warren-bank/ibm-watson-language-translator/lib/optimize-duplicates')
+
+{
+  const api_key             = 'xxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxx'
+  const api_url             = 'https://api.us-south.language-translator.watson.cloud.ibm.com/instances/yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy'
+  const input_language_code = 'en'
+  const input_strings_array = ['Hello world', 'Welcome to the jungle', 'Hello world', 'Welcome to the jungle']
+  const optimize_duplicates = false
+
+  const duplicates_store            = new DuplicatesStore(input_strings_array)
+  const deduped_input_strings_array = duplicates_store.dehydrate_input_strings_array()
+  const output_languages            = ['de', 'es', 'fr']
+
+  for (const output_language_code of output_languages) {
+    const deduped_translated_strings_array = await translate(
+      api_key, api_url, input_language_code, output_language_code, deduped_input_strings_array, optimize_duplicates
+    )
+    const translated_strings_array = duplicates_store.rehydrate_translated_strings_array(deduped_translated_strings_array)
+
+    console.log(output_language_code)
+    console.log(JSON.stringify(translated_strings_array, null, 2))
+  }
 }
 ```
 
