@@ -109,7 +109,7 @@ npm install @warren-bank/ibm-watson-language-translator
 * implicit optimization of duplicate input strings
 
 ```javascript
-const translate = require('@warren-bank/ibm-watson-language-translator')
+const {translate} = require('@warren-bank/ibm-watson-language-translator')
 
 {
   const api_key              = 'xxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxx'
@@ -129,7 +129,7 @@ const translate = require('@warren-bank/ibm-watson-language-translator')
 * explicit optimization of duplicate input strings
 
 ```javascript
-const translate         = require('@warren-bank/ibm-watson-language-translator')
+const {translate}       = require('@warren-bank/ibm-watson-language-translator')
 const {DuplicatesStore} = require('@warren-bank/ibm-watson-language-translator/lib/optimize-duplicates')
 
 {

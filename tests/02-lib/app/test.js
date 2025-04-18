@@ -1,4 +1,4 @@
-const translate = require('../../../lib/ibm-watson-language-translator')
+const translate = require('../../../lib/ibm-watson-language-translator/translate')
 
 const print_divider = function() {
   console.log(('-').repeat(40))

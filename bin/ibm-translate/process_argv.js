@@ -1,14 +1,12 @@
 const process_argv = require('@warren-bank/node-process-argv')
 
-const lang_codes = ['ar','eu','bn','bs','bg','ca','zh','zh-TW','hr','cs','da','nl','en','et','fi','fr','fr-CA','de','el','gu','he','hi','hu','ga','id','it','ja','ko','lv','lt','ms','ml','mt','cnr','ne','nb','pl','pt','ro','ru','sr','si','sk','sl','es','sv','ta','te','th','tr','uk','ur','vi','cy']
-
 const argv_flags = {
   "--help":             {bool: true},
   "--version":          {bool: true},
   "--api-key":          {},
   "--api-url":          {},
-  "--input-language":   {enum: lang_codes},
-  "--output-language":  {enum: lang_codes, many: true},
+  "--input-language":   {},
+  "--output-language":  {},
   "--input-string":     {}
 }
 
@@ -23,7 +21,6 @@ const argv_flag_aliases = {
 }
 
 let argv_vals = {}
-
 try {
   argv_vals = process_argv(argv_flags, argv_flag_aliases)
 }
@@ -70,29 +67,6 @@ if (!argv_vals["--output-language"]) {
 if (!argv_vals["--input-string"]) {
   console.log('ERROR: Input string to be translated is required')
   process.exit(1)
-}
-
-// validate restricted translation pairs
-{
-  const whitelist = {
-    "eu": ["es"],
-    "ca": ["es"]
-  }
-
-  const test_translation_pair = (src, dst) => {
-    if (
-      (whitelist[src] && (whitelist[src].indexOf(dst) === -1)) ||
-      (whitelist[dst] && (whitelist[dst].indexOf(src) === -1))
-    ) {
-      console.log(`ERROR: Input language ("${src}") cannot be translated to output language ("${dst}")`)
-      process.exit(1)
-    }
-  }
-
-  test_translation_pair(
-    argv_vals["--input-language"],
-    argv_vals["--output-language"]
-  )
 }
 
 module.exports = argv_vals
