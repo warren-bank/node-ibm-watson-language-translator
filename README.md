@@ -2,6 +2,17 @@
 
 Unofficial Node.js client library and CLI for a subset of the IBM Watson&trade; Language Translator service API.
 
+- - - - -
+
+### Defunct:
+
+```text
+IBM Watson Language Translator service has been deprecated on June 20th, 2023.
+The service will permanently shut down on June 10th, 2024.
+```
+
+- - - - -
+
 #### Installation:
 
 ```bash
